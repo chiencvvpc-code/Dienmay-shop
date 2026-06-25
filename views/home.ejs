@@ -5,6 +5,18 @@
   <p>Tivi, tủ lạnh, máy giặt, điều hòa, điện thoại, laptop chính hãng</p>
 </div>
 
+<% if (banners.length > 0) { %>
+  <div class="banner-strip">
+    <% banners.forEach(function(banner) { %>
+      <a href="<%= banner.link %>" target="_blank" rel="noopener sponsored">
+        <img src="<%= banner.image %>" alt="<%= banner.title || '' %>" />
+      </a>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('partials/ad-slot') %>
+
 <h2 class="section-title">Danh mục sản phẩm</h2>
 <div class="category-grid">
   <% categories.forEach(function(cat) { %>

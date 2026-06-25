@@ -31,6 +31,10 @@
     Giá gốc (đ)
     <input type="number" name="original_price" min="0" step="1000" value="<%= product.original_price || '' %>" />
   </label>
+  <label>
+    Link affiliate (VD: link Shopee/Lazada, để trống nếu không có)
+    <input type="text" name="affiliate_url" value="<%= product.affiliate_url || '' %>" placeholder="https://shopee.vn/..." />
+  </label>
 
   <p>Ảnh hiện tại:</p>
   <img src="<%= product.image %>" alt="" class="admin-thumb-large" />

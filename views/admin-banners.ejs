@@ -1,0 +1,61 @@
+<%- include('partials/header') %>
+
+<h1>Quản lý banner quảng cáo</h1>
+
+<form action="/admin/banners/add" method="POST" enctype="multipart/form-data" class="admin-form">
+  <h2>Thêm banner mới</h2>
+  <label>
+    Tiêu đề (chỉ để ghi chú nội bộ)
+    <input type="text" name="title" />
+  </label>
+  <label>
+    Link khi bấm vào banner
+    <input type="text" name="link" placeholder="https://..." required />
+  </label>
+  <label>
+    Tải ảnh banner lên (ưu tiên nếu chọn)
+    <input type="file" name="imageFile" accept="image/*" />
+  </label>
+  <label>
+    Hoặc dán đường dẫn ảnh
+    <input type="text" name="image" placeholder="/img/products/default.svg" />
+  </label>
+  <label>
+    Thứ tự hiển thị (số nhỏ hiện trước)
+    <input type="number" name="sort_order" value="0" />
+  </label>
+  <button type="submit" class="btn">Thêm banner</button>
+</form>
+
+<h2>Danh sách banner</h2>
+<table class="cart-table">
+  <thead>
+    <tr>
+      <th>Ảnh</th>
+      <th>Link</th>
+      <th>Trạng thái</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% banners.forEach(function(banner) { %>
+      <tr>
+        <td><img src="<%= banner.image %>" alt="" class="admin-thumb" /></td>
+        <td><a href="<%= banner.link %>" target="_blank"><%= banner.link %></a></td>
+        <td><%= banner.active ? 'Đang hiện' : 'Đã ẩn' %></td>
+        <td>
+          <form action="/admin/banners/toggle" method="POST" class="inline-form">
+            <input type="hidden" name="bannerId" value="<%= banner.id %>" />
+            <button type="submit" class="btn-small"><%= banner.active ? 'Ẩn' : 'Hiện' %></button>
+          </form>
+          <form action="/admin/banners/delete" method="POST" class="inline-form">
+            <input type="hidden" name="bannerId" value="<%= banner.id %>" />
+            <button type="submit" class="link-button">Xóa</button>
+          </form>
+        </td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%- include('partials/footer') %>

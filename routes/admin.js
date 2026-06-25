@@ -58,7 +58,7 @@ router.post('/products/edit/:id', requireAdmin, upload.single('imageFile'), asyn
   if (!adminClient) {
     return res.status(500).send('Thieu SUPABASE_SERVICE_ROLE_KEY tren server');
   }
-  const { name, brand, description, price, original_price, image, stock, category_id } = req.body;
+  const { name, brand, description, price, original_price, image, stock, category_id, affiliate_url } = req.body;
   const uploadedUrl = await uploadImageIfPresent(req.file);
 
   await adminClient
@@ -73,6 +73,7 @@ router.post('/products/edit/:id', requireAdmin, upload.single('imageFile'), asyn
       original_price: parseFloat(original_price) || null,
       image: uploadedUrl || image || '/img/products/default.svg',
       stock: parseInt(stock, 10) || 0,
+      affiliate_url: affiliate_url || null,
     })
     .eq('id', req.params.id);
 
@@ -83,7 +84,7 @@ router.post('/products/add', requireAdmin, upload.single('imageFile'), async (re
   if (!adminClient) {
     return res.status(500).send('Thieu SUPABASE_SERVICE_ROLE_KEY tren server');
   }
-  const { name, brand, description, price, original_price, image, stock, category_id } = req.body;
+  const { name, brand, description, price, original_price, image, stock, category_id, affiliate_url } = req.body;
   const uploadedUrl = await uploadImageIfPresent(req.file);
 
   await adminClient.from('products').insert({
@@ -96,6 +97,7 @@ router.post('/products/add', requireAdmin, upload.single('imageFile'), async (re
     original_price: parseFloat(original_price) || null,
     image: uploadedUrl || image || '/img/products/default.svg',
     stock: parseInt(stock, 10) || 0,
+    affiliate_url: affiliate_url || null,
   });
   res.redirect('/admin/products');
 });
@@ -106,6 +108,51 @@ router.post('/products/delete', requireAdmin, async (req, res) => {
   }
   await adminClient.from('products').delete().eq('id', req.body.productId);
   res.redirect('/admin/products');
+});
+
+router.get('/banners', requireAdmin, async (req, res) => {
+  const { data: banners } = await publicClient.from('banners').select('*').order('sort_order');
+  res.render('admin-banners', { banners: banners || [] });
+});
+
+router.post('/banners/add', requireAdmin, upload.single('imageFile'), async (req, res) => {
+  if (!adminClient) {
+    return res.status(500).send('Thieu SUPABASE_SERVICE_ROLE_KEY tren server');
+  }
+  const { title, link, image, sort_order } = req.body;
+  const uploadedUrl = await uploadImageIfPresent(req.file);
+
+  await adminClient.from('banners').insert({
+    title: title || '',
+    link,
+    image: uploadedUrl || image,
+    sort_order: parseInt(sort_order, 10) || 0,
+    active: true,
+  });
+  res.redirect('/admin/banners');
+});
+
+router.post('/banners/toggle', requireAdmin, async (req, res) => {
+  if (!adminClient) {
+    return res.status(500).send('Thieu SUPABASE_SERVICE_ROLE_KEY tren server');
+  }
+  const { data: banner } = await adminClient
+    .from('banners')
+    .select('active')
+    .eq('id', req.body.bannerId)
+    .single();
+  if (banner) {
+    await adminClient.from('banners').update({ active: !banner.active }).eq('id', req.body.bannerId);
+  }
+  res.redirect('/admin/banners');
+});
+
+router.post('/banners/delete', requireAdmin, async (req, res) => {
+  if (!adminClient) {
+    return res.status(500).send('Thieu SUPABASE_SERVICE_ROLE_KEY tren server');
+  }
+  await adminClient.from('banners').delete().eq('id', req.body.bannerId);
+  res.redirect('/admin/banners');
 });
 
 module.exports = router;

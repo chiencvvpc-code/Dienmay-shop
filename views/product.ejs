@@ -36,6 +36,12 @@
     <% } else { %>
       <p><a href="/login">Đăng nhập</a> để mua hàng</p>
     <% } %>
+
+    <% if (product.affiliate_url) { %>
+      <a href="<%= product.affiliate_url %>" target="_blank" rel="noopener sponsored" class="btn-affiliate">
+        🛒 Mua tại đối tác (link ngoài)
+      </a>
+    <% } %>
   </div>
 </div>
 

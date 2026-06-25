@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= typeof title !== 'undefined' ? title : 'DienMayShop' %></title>
   <link rel="stylesheet" href="/css/style.css" />
+  <% if (process.env.ADSENSE_CLIENT_ID) { %>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<%= process.env.ADSENSE_CLIENT_ID %>" crossorigin="anonymous"></script>
+  <% } %>
 </head>
 <body>
   <header class="topbar">
@@ -20,6 +23,7 @@
           <a href="/orders">Đơn hàng</a>
           <% if (currentUser.is_admin) { %>
             <a href="/admin/products">Quản trị</a>
+            <a href="/admin/banners">Banner</a>
           <% } %>
           <span class="user-greeting">Hi, <%= currentUser.name %></span>
           <form action="/logout" method="POST" class="inline-form">

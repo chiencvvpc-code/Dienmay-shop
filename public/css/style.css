@@ -313,6 +313,42 @@ body {
   padding: 6px;
 }
 
+.btn-affiliate {
+  display: inline-block;
+  background: #fb8c00;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.btn-affiliate:hover {
+  background: #ef6c00;
+}
+
+.banner-strip {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  margin-bottom: 24px;
+}
+
+.banner-strip a {
+  flex-shrink: 0;
+}
+
+.banner-strip img {
+  height: 140px;
+  border-radius: 8px;
+  display: block;
+}
+
+.ad-slot {
+  margin: 24px 0;
+  text-align: center;
+}
+
 .specs-table {
   width: 100%;
   border-collapse: collapse;

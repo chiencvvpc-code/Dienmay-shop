@@ -11,7 +11,12 @@ router.get('/', async (req, res) => {
     .select('*')
     .order('id', { ascending: false })
     .limit(8);
-  res.render('home', { categories: categories || [], featured: featured || [] });
+  const { data: banners } = await publicClient
+    .from('banners')
+    .select('*')
+    .eq('active', true)
+    .order('sort_order');
+  res.render('home', { categories: categories || [], featured: featured || [], banners: banners || [] });
 });
 
 router.get('/category/:slug', async (req, res) => {
