@@ -2,7 +2,7 @@
 
 <h1>Quản lý sản phẩm</h1>
 
-<form action="/admin/products/add" method="POST" class="admin-form">
+<form action="/admin/products/add" method="POST" enctype="multipart/form-data" class="admin-form">
   <h2>Thêm sản phẩm mới</h2>
   <label>
     Danh mục
@@ -33,13 +33,27 @@
     <input type="number" name="original_price" min="0" step="1000" />
   </label>
   <label>
-    Đường dẫn ảnh
+    Tải ảnh lên (ưu tiên nếu chọn)
+    <input type="file" name="imageFile" accept="image/*" />
+  </label>
+  <label>
+    Hoặc dán đường dẫn ảnh
     <input type="text" name="image" placeholder="/img/products/default.svg" />
   </label>
   <label>
     Số lượng kho
     <input type="number" name="stock" min="0" required />
   </label>
+
+  <h3>Thông số kỹ thuật</h3>
+  <div class="spec-rows">
+    <div class="spec-row">
+      <input type="text" name="specKey" placeholder="Tên thông số (VD: Màn hình)" />
+      <input type="text" name="specValue" placeholder="Giá trị (VD: 50 inch 4K)" />
+    </div>
+  </div>
+  <button type="button" class="btn-secondary" onclick="addSpecRow(this)">+ Thêm thông số</button>
+
   <button type="submit" class="btn">Thêm sản phẩm</button>
 </form>
 
@@ -47,6 +61,7 @@
 <table class="cart-table">
   <thead>
     <tr>
+      <th>Ảnh</th>
       <th>Tên</th>
       <th>Danh mục</th>
       <th>Giá</th>
@@ -57,11 +72,13 @@
   <tbody>
     <% products.forEach(function(product) { %>
       <tr>
+        <td><img src="<%= product.image %>" alt="" class="admin-thumb" /></td>
         <td><%= product.name %></td>
         <td><%= product.category_name %></td>
         <td><%= product.price.toLocaleString('vi-VN') %>đ</td>
         <td><%= product.stock %></td>
         <td>
+          <a href="/admin/products/edit/<%= product.id %>" class="btn-small">Sửa</a>
           <form action="/admin/products/delete" method="POST" class="inline-form">
             <input type="hidden" name="productId" value="<%= product.id %>" />
             <button type="submit" class="link-button">Xóa</button>
@@ -71,5 +88,18 @@
     <% }); %>
   </tbody>
 </table>
+
+<script>
+  function addSpecRow(btn) {
+    const container = btn.previousElementSibling;
+    const row = document.createElement('div');
+    row.className = 'spec-row';
+    row.innerHTML =
+      '<input type="text" name="specKey" placeholder="Tên thông số" />' +
+      '<input type="text" name="specValue" placeholder="Giá trị" />' +
+      '<button type="button" onclick="this.parentElement.remove()">×</button>';
+    container.appendChild(row);
+  }
+</script>
 
 <%- include('partials/footer') %>

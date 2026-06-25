@@ -1,0 +1,88 @@
+<%- include('partials/header') %>
+
+<h1>Sửa sản phẩm</h1>
+
+<form action="/admin/products/edit/<%= product.id %>" method="POST" enctype="multipart/form-data" class="admin-form">
+  <label>
+    Danh mục
+    <select name="category_id" required>
+      <% categories.forEach(function(cat) { %>
+        <option value="<%= cat.id %>" <%= cat.id === product.category_id ? 'selected' : '' %>><%= cat.name %></option>
+      <% }); %>
+    </select>
+  </label>
+  <label>
+    Tên sản phẩm
+    <input type="text" name="name" value="<%= product.name %>" required />
+  </label>
+  <label>
+    Thương hiệu
+    <input type="text" name="brand" value="<%= product.brand || '' %>" />
+  </label>
+  <label>
+    Mô tả
+    <input type="text" name="description" value="<%= product.description || '' %>" />
+  </label>
+  <label>
+    Giá bán (đ)
+    <input type="number" name="price" min="0" step="1000" value="<%= product.price %>" required />
+  </label>
+  <label>
+    Giá gốc (đ)
+    <input type="number" name="original_price" min="0" step="1000" value="<%= product.original_price || '' %>" />
+  </label>
+
+  <p>Ảnh hiện tại:</p>
+  <img src="<%= product.image %>" alt="" class="admin-thumb-large" />
+
+  <label>
+    Tải ảnh mới lên (ưu tiên nếu chọn)
+    <input type="file" name="imageFile" accept="image/*" />
+  </label>
+  <label>
+    Hoặc dán đường dẫn ảnh
+    <input type="text" name="image" value="<%= product.image || '' %>" />
+  </label>
+  <label>
+    Số lượng kho
+    <input type="number" name="stock" min="0" value="<%= product.stock %>" required />
+  </label>
+
+  <h3>Thông số kỹ thuật</h3>
+  <div class="spec-rows">
+    <% const specEntries = Object.entries(product.specs || {}); %>
+    <% if (specEntries.length === 0) { %>
+      <div class="spec-row">
+        <input type="text" name="specKey" placeholder="Tên thông số" />
+        <input type="text" name="specValue" placeholder="Giá trị" />
+      </div>
+    <% } else { %>
+      <% specEntries.forEach(function(entry) { %>
+        <div class="spec-row">
+          <input type="text" name="specKey" value="<%= entry[0] %>" placeholder="Tên thông số" />
+          <input type="text" name="specValue" value="<%= entry[1] %>" placeholder="Giá trị" />
+          <button type="button" onclick="this.parentElement.remove()">×</button>
+        </div>
+      <% }); %>
+    <% } %>
+  </div>
+  <button type="button" class="btn-secondary" onclick="addSpecRow(this)">+ Thêm thông số</button>
+
+  <button type="submit" class="btn">Lưu thay đổi</button>
+  <a href="/admin/products" class="btn-secondary">Hủy</a>
+</form>
+
+<script>
+  function addSpecRow(btn) {
+    const container = btn.previousElementSibling;
+    const row = document.createElement('div');
+    row.className = 'spec-row';
+    row.innerHTML =
+      '<input type="text" name="specKey" placeholder="Tên thông số" />' +
+      '<input type="text" name="specValue" placeholder="Giá trị" />' +
+      '<button type="button" onclick="this.parentElement.remove()">×</button>';
+    container.appendChild(row);
+  }
+</script>
+
+<%- include('partials/footer') %>

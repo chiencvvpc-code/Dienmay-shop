@@ -13,6 +13,12 @@ const publicClient = createClient(supabaseUrl, supabaseAnonKey);
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const adminClient = serviceRoleKey ? createClient(supabaseUrl, serviceRoleKey) : null;
 
+const PRODUCT_IMAGE_BUCKET = 'product-images';
+
+if (adminClient) {
+  adminClient.storage.createBucket(PRODUCT_IMAGE_BUCKET, { public: true }).catch(() => {});
+}
+
 function clientForUser(accessToken) {
   if (!accessToken) return publicClient;
   return createClient(supabaseUrl, supabaseAnonKey, {
@@ -20,4 +26,4 @@ function clientForUser(accessToken) {
   });
 }
 
-module.exports = { publicClient, clientForUser, adminClient };
+module.exports = { publicClient, clientForUser, adminClient, PRODUCT_IMAGE_BUCKET };

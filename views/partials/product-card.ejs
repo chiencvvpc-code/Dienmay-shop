@@ -11,4 +11,17 @@
   <% } %>
   <p class="price-new"><%= product.price.toLocaleString('vi-VN') %>đ</p>
   <a href="/product/<%= product.id %>" class="btn btn-block">Xem chi tiết</a>
+
+  <div class="hover-detail">
+    <% if (product.brand) { %><p><strong>Thương hiệu:</strong> <%= product.brand %></p><% } %>
+    <% if (product.description) { %><p class="hover-desc"><%= product.description %></p><% } %>
+    <% const specEntries = Object.entries(product.specs || {}).slice(0, 3); %>
+    <% if (specEntries.length > 0) { %>
+      <ul>
+        <% specEntries.forEach(function(entry) { %>
+          <li><strong><%= entry[0] %>:</strong> <%= entry[1] %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </div>
 </div>

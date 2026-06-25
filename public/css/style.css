@@ -211,6 +211,44 @@ body {
   font-size: 0.8em;
 }
 
+.product-card {
+  overflow: visible;
+}
+
+.hover-detail {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 105%;
+  width: 240px;
+  background: #263238;
+  color: #fff;
+  padding: 14px;
+  border-radius: 8px;
+  text-align: left;
+  z-index: 20;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  font-size: 0.85em;
+}
+
+.product-card:hover .hover-detail {
+  display: block;
+}
+
+.hover-detail p,
+.hover-detail li {
+  margin: 4px 0;
+}
+
+.hover-desc {
+  color: #cfd8dc;
+}
+
+.hover-detail ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
 .btn {
   display: inline-block;
   background: #1565c0;
@@ -376,6 +414,69 @@ body {
   width: 100%;
   padding: 6px;
   margin-top: 4px;
+}
+
+.admin-thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.admin-thumb-large {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  display: block;
+  margin: 8px 0 16px;
+}
+
+.btn-small {
+  display: inline-block;
+  background: #455a64;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85em;
+  margin-right: 6px;
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: #90a4ae;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 8px 8px 8px 0;
+}
+
+.spec-rows {
+  margin: 8px 0;
+}
+
+.spec-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.spec-row input {
+  margin-top: 0;
+}
+
+.spec-row button {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .success-box {
