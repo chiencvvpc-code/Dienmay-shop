@@ -1,0 +1,23 @@
+{
+  "name": "dienmay-shop",
+  "version": "1.0.0",
+  "description": "Web ban hang dien tu - danh muc, gio hang, chi tiet san pham",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "cookie-session": "^2.1.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

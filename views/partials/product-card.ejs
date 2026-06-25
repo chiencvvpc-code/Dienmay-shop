@@ -1,0 +1,14 @@
+<div class="product-card">
+  <a href="/product/<%= product.id %>">
+    <img src="<%= product.image %>" alt="<%= product.name %>" />
+    <h3><%= product.name %></h3>
+  </a>
+  <% if (product.original_price && product.original_price > product.price) { %>
+    <p class="price-old"><%= product.original_price.toLocaleString('vi-VN') %>đ</p>
+    <span class="discount-badge">
+      -<%= Math.round((1 - product.price / product.original_price) * 100) %>%
+    </span>
+  <% } %>
+  <p class="price-new"><%= product.price.toLocaleString('vi-VN') %>đ</p>
+  <a href="/product/<%= product.id %>" class="btn btn-block">Xem chi tiết</a>
+</div>

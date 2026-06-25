@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<div class="hero">
+  <h1>Siêu thị điện máy giá tốt</h1>
+  <p>Tivi, tủ lạnh, máy giặt, điều hòa, điện thoại, laptop chính hãng</p>
+</div>
+
+<h2 class="section-title">Danh mục sản phẩm</h2>
+<div class="category-grid">
+  <% categories.forEach(function(cat) { %>
+    <a href="/category/<%= cat.slug %>" class="category-card">
+      <span class="category-icon"><%= cat.icon %></span>
+      <span><%= cat.name %></span>
+    </a>
+  <% }); %>
+</div>
+
+<h2 class="section-title">Sản phẩm mới nổi bật</h2>
+<div class="product-grid">
+  <% featured.forEach(function(product) { %>
+    <%- include('partials/product-card', { product }) %>
+  <% }); %>
+</div>
+
+<%- include('partials/footer') %>

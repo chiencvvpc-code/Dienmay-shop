@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<div class="category-header">
+  <h1><%= category.icon %> <%= category.name %></h1>
+  <form action="/category/<%= category.slug %>" method="GET" class="sort-form">
+    <label>
+      Sắp xếp:
+      <select name="sort" onchange="this.form.submit()">
+        <option value="" <%= sort === '' ? 'selected' : '' %>>Mặc định</option>
+        <option value="price_asc" <%= sort === 'price_asc' ? 'selected' : '' %>>Giá tăng dần</option>
+        <option value="price_desc" <%= sort === 'price_desc' ? 'selected' : '' %>>Giá giảm dần</option>
+      </select>
+    </label>
+  </form>
+</div>
+
+<% if (products.length === 0) { %>
+  <p>Chưa có sản phẩm trong danh mục này.</p>
+<% } else { %>
+  <div class="product-grid">
+    <% products.forEach(function(product) { %>
+      <%- include('partials/product-card', { product }) %>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

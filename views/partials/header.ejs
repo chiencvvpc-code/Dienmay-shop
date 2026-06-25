@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof title !== 'undefined' ? title : 'DienMayShop' %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/" class="logo">⚡ DienMayShop</a>
+      <form action="/search" method="GET" class="search-form">
+        <input type="text" name="q" placeholder="Tìm sản phẩm..." value="<%= typeof q !== 'undefined' ? q : '' %>" />
+        <button type="submit">🔍</button>
+      </form>
+      <nav class="topnav">
+        <a href="/cart" class="cart-link">🛒 Giỏ hàng <% if (cartCount > 0) { %><span class="cart-badge"><%= cartCount %></span><% } %></a>
+        <% if (currentUser) { %>
+          <a href="/orders">Đơn hàng</a>
+          <% if (currentUser.is_admin) { %>
+            <a href="/admin/products">Quản trị</a>
+          <% } %>
+          <span class="user-greeting">Hi, <%= currentUser.name %></span>
+          <form action="/logout" method="POST" class="inline-form">
+            <button type="submit" class="link-button">Đăng xuất</button>
+          </form>
+        <% } else { %>
+          <a href="/login">Đăng nhập</a>
+          <a href="/register">Đăng ký</a>
+        <% } %>
+      </nav>
+    </div>
+    <div class="category-bar">
+      <% allCategories.forEach(function(cat) { %>
+        <a href="/category/<%= cat.slug %>"><%= cat.icon %> <%= cat.name %></a>
+      <% }); %>
+    </div>
+  </header>
+  <main class="container">

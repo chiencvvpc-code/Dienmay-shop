@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+
+<h1>Quản lý sản phẩm</h1>
+
+<form action="/admin/products/add" method="POST" class="admin-form">
+  <h2>Thêm sản phẩm mới</h2>
+  <label>
+    Danh mục
+    <select name="category_id" required>
+      <% categories.forEach(function(cat) { %>
+        <option value="<%= cat.id %>"><%= cat.name %></option>
+      <% }); %>
+    </select>
+  </label>
+  <label>
+    Tên sản phẩm
+    <input type="text" name="name" required />
+  </label>
+  <label>
+    Thương hiệu
+    <input type="text" name="brand" />
+  </label>
+  <label>
+    Mô tả
+    <input type="text" name="description" />
+  </label>
+  <label>
+    Giá bán (đ)
+    <input type="number" name="price" min="0" step="1000" required />
+  </label>
+  <label>
+    Giá gốc (đ)
+    <input type="number" name="original_price" min="0" step="1000" />
+  </label>
+  <label>
+    Đường dẫn ảnh
+    <input type="text" name="image" placeholder="/img/products/default.svg" />
+  </label>
+  <label>
+    Số lượng kho
+    <input type="number" name="stock" min="0" required />
+  </label>
+  <button type="submit" class="btn">Thêm sản phẩm</button>
+</form>
+
+<h2>Danh sách sản phẩm</h2>
+<table class="cart-table">
+  <thead>
+    <tr>
+      <th>Tên</th>
+      <th>Danh mục</th>
+      <th>Giá</th>
+      <th>Kho</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.forEach(function(product) { %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.category_name %></td>
+        <td><%= product.price.toLocaleString('vi-VN') %>đ</td>
+        <td><%= product.stock %></td>
+        <td>
+          <form action="/admin/products/delete" method="POST" class="inline-form">
+            <input type="hidden" name="productId" value="<%= product.id %>" />
+            <button type="submit" class="link-button">Xóa</button>
+          </form>
+        </td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%- include('partials/footer') %>

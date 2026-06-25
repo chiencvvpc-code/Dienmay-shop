@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<div class="auth-form">
+  <h1>Đăng nhập</h1>
+  <% if (error) { %>
+    <p class="error-message"><%= error %></p>
+  <% } %>
+  <form action="/login" method="POST">
+    <label>
+      Email
+      <input type="email" name="email" required />
+    </label>
+    <label>
+      Mật khẩu
+      <input type="password" name="password" required />
+    </label>
+    <button type="submit" class="btn">Đăng nhập</button>
+  </form>
+  <p>Chưa có tài khoản? <a href="/register">Đăng ký ngay</a></p>
+</div>
+
+<%- include('partials/footer') %>

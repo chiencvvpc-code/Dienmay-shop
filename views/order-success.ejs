@@ -1,0 +1,10 @@
+<%- include('partials/header') %>
+
+<div class="success-box">
+  <h1>Đặt hàng thành công! 🎉</h1>
+  <p>Mã đơn hàng: #<%= orderId %></p>
+  <p>Tổng tiền: <%= total.toLocaleString('vi-VN') %>đ</p>
+  <a href="/" class="btn">Tiếp tục mua sắm</a>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+
+<h1>Giỏ hàng của bạn</h1>
+
+<% if (items.length === 0) { %>
+  <p>Giỏ hàng đang trống. <a href="/">Tiếp tục mua sắm</a></p>
+<% } else { %>
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Sản phẩm</th>
+        <th>Đơn giá</th>
+        <th>Số lượng</th>
+        <th>Tạm tính</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.forEach(function(item) { %>
+        <tr>
+          <td>
+            <a href="/product/<%= item.product.id %>"><%= item.product.name %></a>
+          </td>
+          <td><%= item.product.price.toLocaleString('vi-VN') %>đ</td>
+          <td>
+            <form action="/cart/update" method="POST" class="inline-form">
+              <input type="hidden" name="productId" value="<%= item.productId %>" />
+              <input type="number" name="quantity" value="<%= item.quantity %>" min="1" onchange="this.form.submit()" />
+            </form>
+          </td>
+          <td><%= item.subtotal.toLocaleString('vi-VN') %>đ</td>
+          <td>
+            <form action="/cart/remove" method="POST" class="inline-form">
+              <input type="hidden" name="productId" value="<%= item.productId %>" />
+              <button type="submit" class="link-button">Xóa</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <h2>Tổng cộng: <%= total.toLocaleString('vi-VN') %>đ</h2>
+
+  <form action="/checkout" method="POST">
+    <button type="submit" class="btn">Thanh toán</button>
+  </form>
+<% } %>
+
+<%- include('partials/footer') %>

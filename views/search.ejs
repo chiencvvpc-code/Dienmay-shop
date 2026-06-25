@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+
+<h1>Kết quả tìm kiếm cho "<%= q %>"</h1>
+
+<% if (products.length === 0) { %>
+  <p>Không tìm thấy sản phẩm phù hợp.</p>
+<% } else { %>
+  <div class="product-grid">
+    <% products.forEach(function(product) { %>
+      <%- include('partials/product-card', { product }) %>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

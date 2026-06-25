@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+
+<div class="breadcrumb">
+  <a href="/">Trang chủ</a> /
+  <a href="/category/<%= category.slug %>"><%= category.name %></a> /
+  <span><%= product.name %></span>
+</div>
+
+<div class="product-detail">
+  <img src="<%= product.image %>" alt="<%= product.name %>" class="product-detail-img" />
+  <div class="product-info">
+    <h1><%= product.name %></h1>
+    <p class="brand">Thương hiệu: <strong><%= product.brand %></strong></p>
+
+    <% if (product.original_price && product.original_price > product.price) { %>
+      <p class="price-old-detail"><%= product.original_price.toLocaleString('vi-VN') %>đ</p>
+      <span class="discount-badge">
+        -<%= Math.round((1 - product.price / product.original_price) * 100) %>%
+      </span>
+    <% } %>
+    <p class="price-new-detail"><%= product.price.toLocaleString('vi-VN') %>đ</p>
+
+    <p class="description"><%= product.description %></p>
+    <p>Còn lại: <%= product.stock %> sản phẩm</p>
+
+    <% if (currentUser) { %>
+      <form action="/cart/add" method="POST" class="add-cart-form">
+        <input type="hidden" name="productId" value="<%= product.id %>" />
+        <input type="hidden" name="redirectTo" value="/product/<%= product.id %>" />
+        <label>
+          Số lượng:
+          <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>" />
+        </label>
+        <button type="submit" class="btn">Thêm vào giỏ</button>
+      </form>
+    <% } else { %>
+      <p><a href="/login">Đăng nhập</a> để mua hàng</p>
+    <% } %>
+  </div>
+</div>
+
+<% if (Object.keys(specs).length > 0) { %>
+  <h2 class="section-title">Thông số kỹ thuật</h2>
+  <table class="specs-table">
+    <% Object.keys(specs).forEach(function(key) { %>
+      <tr>
+        <td><%= key %></td>
+        <td><%= specs[key] %></td>
+      </tr>
+    <% }); %>
+  </table>
+<% } %>
+
+<% if (related.length > 0) { %>
+  <h2 class="section-title">Sản phẩm liên quan</h2>
+  <div class="product-grid">
+    <% related.forEach(function(p) { %>
+      <%- include('partials/product-card', { product: p }) %>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>
